@@ -23,7 +23,7 @@ class Login extends Component {
 	handleSubmit = (event) => {
 	  const { username, email, password } = this.state;
 
-	  axios.post('http://localhost:3001/users',
+	  axios.post('http://localhost:3001/login',
 	    {
 	      user: {
 	        username,
