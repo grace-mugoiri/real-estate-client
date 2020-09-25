@@ -12,7 +12,7 @@ class Signup extends Component {
       errors: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+		this.handleChange = this.handleChange.bind(this);
   }
 
 	handleChange = (event) => {
@@ -36,7 +36,7 @@ class Signup extends Component {
 	    },
 	  }, { withCredentials: true })
 	    .then((response) => {
-	      if (response.data.status === 'created') {
+	      if (response.data.login) {
 	        this.props.handleSuccessfulAuth(response.data);
 	      }
 	    })

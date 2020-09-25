@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import './assets/App.css';
 import axios from 'axios';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Home from './components/Home';
-import Dashboard from './components/Dashboard';
+import { Switch, Route } from 'react-router-dom';
+import Signup from './components/registrations/Signup';
+import About from './components/About';
+import Navbar from './components/Navbar';
+import Login from './components/registrations/Login';
 
 class App extends Component {
   constructor(props) {
@@ -18,19 +21,18 @@ class App extends Component {
 	loginStatus = () => {
 	  axios.get('http://localhost:3001/logged_in',
 	    { withCredentials: true })
-	    .then((response) => {
-	      if (response.data.logged_in && this.state.loggedInStatus === 'NOT_LOGGED_IN') {
-	        this.setState({
-	          loggedInStatus: 'LOGGED_IN',
-	        });
-	      } else if (
-	        !response.data.logged_in && (this.state.loggedInStatus === 'LOGGED_IN')
-	      ) {
-	        this.setState({
-	          loggedInStatus: 'NOT_LOGGED_IN',
-	          user: {},
-	        });
-	      }
+		  .then((response) => {
+			  console.log('Worked', response)
+	      if (response.data.logged_in ) {
+			//   this.setState({
+	        //   loggedInStatus: 'LOGGED_IN',
+			//   });
+			  console.log("logged in")
+
+		  } else (
+			  console.log("redirect")
+			  )
+
 	    })
 	    .catch((error) => {
 	      console.log('api errors:', error);
@@ -57,10 +59,17 @@ class App extends Component {
 
 	render() {
 	  return (
-  <div className="app">
-    <BrowserRouter>
-      <Switch>
-        <Route
+			<div className="app">
+				<Navbar />
+				<Switch>
+					<Route path="/login" component={Login} />
+					<Route path="/signup" component={Signup} />
+				  <Route path="/about" component={About} />
+				  {/* <Route path="/logout" component={About} /> */}
+
+
+
+        {/* <Route
           exact
           path="/"
           render={(props) => (
@@ -71,9 +80,8 @@ class App extends Component {
           path="/dashboard"
           render={(props) => (
             <Dashboard {...props} handleLogin={this.handleLogin} loggedInStatus={this.state.loggedInStatus} />)}
-        />
+        /> */}
       </Switch>
-    </BrowserRouter>
   </div>
 	  );
 	}
