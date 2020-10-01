@@ -26,14 +26,13 @@ class Signup extends Component {
 	    username, email, password, password_confirmation,
 	  } = this.state;
 
-	  axios.post('http://localhost:3001/users', {
-	    user: {
+		axios.post('http://localhost:3001/users',
+			{
 	      username,
 	      email,
 	      password,
 	      password_confirmation,
 
-	    },
 	  }, { withCredentials: true })
 	    .then((response) => {
 	      if (response.data.login) {
