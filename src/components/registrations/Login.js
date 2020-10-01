@@ -6,7 +6,6 @@ class Login extends Component {
     super(props);
     this.state = {
       username: '',
-      email: '',
       password: '',
       errors: '',
     };
@@ -21,30 +20,35 @@ class Login extends Component {
 	};
 
 	handleSubmit = (event) => {
-	  const { username, email, password } = this.state;
+		event.preventDefault();
+		const { username, password } = this.state;
+
 
 	  axios.post('http://localhost:3001/login',
 	    {
-	      user: {
 	        username,
-	        email,
 	        password,
-	      },
 	    },
 		 { withCredentials: true })
-	    .then((response) => {
-	      if (response.data.logged_in) {
-	        this.props.handleSuccessfulAuth(response.data);
-	      }
+			.then((response) => {
+
+			 if (response.data.logged_in) {
+        this.props.handleLogin(response.data)
+        this.redirect()
+      } else {
+        this.setState({
+          errors: response.data.errors
+        })
+      }
 	    })
 	    .catch((error) => {
 	      console.log('api errors: error');
 	    });
-		  event.preventDefault();
+
 	}
 
 	render() {
-		  const { username, email, password } = this.state;
+		  const { username, password } = this.state;
 		  return (
   <div>
     <h1> Log In </h1>
@@ -54,13 +58,6 @@ class Login extends Component {
         value={username}
         placeholder="username"
         name="username"
-        onChange={this.handleChange}
-      />
-      <input
-        type="text"
-        value={email}
-        placeholder="email"
-        name="email"
         onChange={this.handleChange}
       />
       <input
