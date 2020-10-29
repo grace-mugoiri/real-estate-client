@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom'
 
 class Login extends Component {
   constructor(props) {
@@ -31,10 +32,17 @@ class Login extends Component {
 	    },
 		 { withCredentials: true })
 			.then((response) => {
+				if (response.data.logged_in) {
+					const currentUser = {
+						loggedIn: response.data.logged_in,
+						email: response.data.user.email,
+						username: this.state.username,
+						password: this.state.password
+					}
 
-			 if (response.data.logged_in) {
-        this.props.handleSuccessfulAuth(response.data)
-        this.redirect()
+				 sessionStorage.setItem('current_user', JSON.stringify(currentUser))
+				 this.props.history.push('/dashboard');
+
       } else {
         this.setState({
           errors: response.data.errors
@@ -42,7 +50,7 @@ class Login extends Component {
       }
 	    })
 	    .catch((error) => {
-	      console.log('api errors: error');
+	      console.log(error.message);
 	    });
 
 	}
@@ -78,4 +86,4 @@ class Login extends Component {
 	}
 }
 
-export default Login;
+export default withRouter(Login);

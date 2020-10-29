@@ -35,8 +35,17 @@ class Signup extends Component {
 
 	  }, { withCredentials: true })
 	    .then((response) => {
-	      if (response.data.login) {
-	        this.props.handleSuccessfulAuth(response.data);
+	      if (response.status === 200) {
+	        const currentUser = {
+						loggedIn: true,
+						email: this.state.email,
+						username: this.state.username,
+						password: this.state.password
+					}
+
+				 sessionStorage.setItem('current_user', JSON.stringify(currentUser))
+				 this.props.history.push('/dashboard');
+
 	      }
 	    })
 	    .catch((error) => {
