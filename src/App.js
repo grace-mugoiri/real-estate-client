@@ -6,7 +6,8 @@ import Login from './components/registrations/Login';
 import Signup from './components/registrations/Signup';
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
-import './assets/App.css';
+import Contact from './components/Contact';
+import './assets/styles/App.css';
 
 
 class App extends Component {
@@ -20,7 +21,8 @@ class App extends Component {
 				<Route path="/login" component={Login} />
 				<Route path="/signup" component={Signup} />
 				<Route path="/about" component={About} />
-				<Route path="/dashboard" component={Dashboard} />
+				  <Route path="/dashboard" component={Dashboard} />
+				  <Route path="/contact" component={Contact} />
 				<Route path="/" component={Home} />
 			</Switch>
 			</div>
